@@ -6,11 +6,16 @@ An unofficial desktop application for X.
 
 - ⚡ Fast and lightweight
 - 🖥️ Native desktop experience
-- 🔒 Open source
+- 🔓 Open source
 
 ## Disclaimer
 
 XDesktop is an independent project and is **not affiliated with, endorsed by, or sponsored by X**. All trademarks and copyrights belong to their respective owners.
 
+## License
 
-By 1mN1kO ._.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
+
+Made with ❤️ by **1mN1kO**
