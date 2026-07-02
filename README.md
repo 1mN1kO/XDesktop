@@ -3,6 +3,11 @@
 </p>
 
 # XDesktop
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Windows-blue" alt="Windows">
+  <img src="https://img.shields.io/badge/Electron-Latest-47848F" alt="Electron">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT">
+</p>
 
 An unofficial desktop application for X.
 
