@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="assets/preview.gif" alt="XDesktop Preview" width="1000">
+</p>
 # XDesktop
 
 An unofficial desktop application for X.
