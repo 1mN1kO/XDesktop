@@ -1,6 +1,8 @@
 const { app, BrowserWindow, shell, dialog } = require('electron');
 const path = require('path');
+const Store = require('electron-store');
 
+const store = new Store();
 let mainWindow;
 
 function createWindow() {
@@ -36,35 +38,44 @@ function createWindow() {
 }
 
 function showWelcomeDialog() {
+  if (store.get('hideWelcomeDialog')) {
+    return;
+  }
+
   const locale = app.getLocale();
-  let title, message, detail, buttonLabel;
+  let title, message, detail, buttonLabel, checkboxLabel;
 
   if (locale.startsWith('ru')) {
     title = "Добро пожаловать";
-    message = "Внимание: Неофициальное приложение";
-    detail = "Это удобная WebView-версия X (Twitter), с любовью созданная 1mN1kO(MOLLRA) для вашего комфорта.\n\nДанное приложение не является официальным продуктом.";
-    buttonLabel = "Понятно, спасибо!";
+    message = "ℹ️ Внимание: неофициальное приложение";
+    detail = "Это неофициальное настольное приложение для X, созданное 1mN1kO (MOLLRA).\n\nПриложение использует встроенный WebView и не связано с X Corp.";
+    buttonLabel = "Понятно";
+    checkboxLabel = "Больше не показывать это сообщение";
   } else if (locale.startsWith('uk')) {
     title = "Ласкаво просимо";
-    message = "Увага: Неофіційний додаток";
-    detail = "Це зручна WebView-версія X (Twitter), з любов'ю створена 1mN1kO(MOLLRA) для вашого комфорту.\n\nЦей додаток не є офіційним продуктом.";
-    buttonLabel = "Зрозуміло, дякую!";
+    message = "ℹ️ Увага: неофіційний додаток";
+    detail = "Це неофіційний настільний додаток для X, створений 1mN1kO (MOLLRA).\n\nДодаток використовує вбудований WebView і не пов'язаний з X Corp.";
+    buttonLabel = "Зрозуміло";
+    checkboxLabel = "Більше не показувати це повідомлення";
   } else if (locale.startsWith('es')) {
     title = "Bienvenido";
-    message = "Atención: Aplicación no oficial";
-    detail = "Esta es una conveniente versión WebView de X (Twitter), creada con cariño por 1mN1kO(MOLLRA) para su comodidad.\n\nEsta no es una aplicación oficial.";
-    buttonLabel = "¡Entendido, gracias!";
+    message = "ℹ️ Atención: aplicación no oficial";
+    detail = "Esta es una aplicación de escritorio no oficial para X, creada por 1mN1kO (MOLLRA).\n\nLa aplicación utiliza un WebView integrado y no está afiliada a X Corp.";
+    buttonLabel = "Entendido";
+    checkboxLabel = "No volver a mostrar este mensaje";
   } else if (locale.startsWith('zh')) {
     title = "欢迎";
-    message = "注意：非官方应用";
-    detail = "这是一个便捷的 X (Twitter) WebView 版本，由 1mN1kO(MOLLRA) 为您的舒适体验精心制作。\n\n此应用不是官方产品。";
-    buttonLabel = "明白了，谢谢！";
+    message = "ℹ️ 注意：非官方应用";
+    detail = "这是由 1mN1kO (MOLLRA) 创建的 X 非官方桌面应用。\n\n该应用使用内置的 WebView，与 X Corp 无关。";
+    buttonLabel = "明白了";
+    checkboxLabel = "不再显示此消息";
   } else {
     // Default to English
     title = "Welcome";
-    message = "Notice: Unofficial Application";
-    detail = "This is a convenient WebView wrapper for X (Twitter), lovingly created by 1mN1kO(MOLLRA) for your comfort.\n\nThis is not an official app.";
-    buttonLabel = "Got it, thanks!";
+    message = "ℹ️ Notice: unofficial application";
+    detail = "This is an unofficial desktop application for X, created by 1mN1kO (MOLLRA).\n\nThe application uses a built-in WebView and is not affiliated with X Corp.";
+    buttonLabel = "Got it";
+    checkboxLabel = "Do not show this message again";
   }
 
   dialog.showMessageBox(mainWindow, {
@@ -73,7 +84,13 @@ function showWelcomeDialog() {
     message: message,
     detail: detail,
     buttons: [buttonLabel],
+    checkboxLabel: checkboxLabel,
+    checkboxChecked: false,
     icon: path.join(__dirname, 'build', 'icon.png')
+  }).then(result => {
+    if (result.checkboxChecked) {
+      store.set('hideWelcomeDialog', true);
+    }
   });
 }
 
