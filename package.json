@@ -1,0 +1,34 @@
+{
+  "name": "x-desktop",
+  "version": "1.0.0",
+  "description": "Desktop wrapper for X (Twitter)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "build:all": "electron-builder -wml"
+  },
+  "keywords": ["x", "twitter", "electron"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^43.0.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.x.desktop",
+    "productName": "X Desktop",
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "category": "public.app-category.social-networking"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"]
+    }
+  }
+}
